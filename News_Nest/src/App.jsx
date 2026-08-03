@@ -1,9 +1,29 @@
+import { useEffect, useState } from "react";
 import Navbar from "./components/Navbar";
 import SearchBar from "./components/SearchBar";
 import CategoryButtons from "./components/CategoryButtons";
 import NewsCard from "./components/NewsCard";
+import { getTopHeadlines } from "./services/newsApi";
 
 function App() {
+  const [news, setNews] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    async function fetchNews() {
+      try {
+        const articles = await getTopHeadlines();
+        setNews(articles);
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    fetchNews();
+  }, []);
+
   return (
     <>
       <Navbar />
@@ -11,14 +31,28 @@ function App() {
       <main className="max-w-7xl mx-auto px-6 py-8">
         <SearchBar />
         <CategoryButtons />
-        <NewsCard
-  title="OpenAI launches a new AI model"
-  description="OpenAI has introduced a new model with improved reasoning, coding, and multimodal capabilities."
-  image="https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=800"
-  source="TechCrunch"
-  publishedAt="August 2, 2026"
-  url="https://example.com"
-/>
+
+        {loading ? (
+          <h1 className="text-center text-2xl font-semibold mt-10">
+            Loading...
+          </h1>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-10">
+            {news.map((article, index) => (
+              <NewsCard
+                key={index}
+                title={article.title}
+                description={article.description}
+                image={article.image}
+                source={article.source.name}
+                publishedAt={new Date(
+                  article.publishedAt
+                ).toLocaleDateString()}
+                url={article.url}
+              />
+            ))}
+          </div>
+        )}
       </main>
     </>
   );
