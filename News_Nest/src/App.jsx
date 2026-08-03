@@ -3,7 +3,7 @@ import Navbar from "./components/Navbar";
 import SearchBar from "./components/SearchBar";
 import CategoryButtons from "./components/CategoryButtons";
 import NewsCard from "./components/NewsCard";
-import { getTopHeadlines } from "./services/newsApi";
+import { getTopHeadlines, getNewsByCategory,} from "./services/newsApi";
 
 function App() {
   const [news, setNews] = useState([]);
@@ -23,6 +23,18 @@ function App() {
 
     fetchNews();
   }, []);
+  const handleCategory = async (category) => {
+  setLoading(true);
+
+  try {
+    const articles = await getNewsByCategory(category);
+    setNews(articles);
+  } catch (error) {
+    console.error(error);
+  } finally {
+    setLoading(false);
+  }
+};
 
   return (
     <>
@@ -30,7 +42,7 @@ function App() {
 
       <main className="max-w-7xl mx-auto px-6 py-8">
         <SearchBar />
-        <CategoryButtons />
+       <CategoryButtons onCategorySelect={handleCategory} />
 
         {loading ? (
           <h1 className="text-center text-2xl font-semibold mt-10">
