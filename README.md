@@ -17,14 +17,6 @@ NewsNest fetches real-time news using the **GNews API**, allowing users to brows
 ---
 
 
-## 📸 Screenshots
-
-### Home Page
-
-_Add a screenshot here after deploying._
-
----
-
 ## ⚙️ Installation
 
 1. Clone the repository
