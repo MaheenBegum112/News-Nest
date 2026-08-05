@@ -20,3 +20,10 @@ export const getNewsByCategory = async (category) => {
 
   return response.data.articles;
 };
+export const searchNews = async (query) => {
+  const response = await axios.get(
+    `${BASE_URL}/search?q=${query}&lang=en&max=10&apikey=${API_KEY}`
+  );
+
+  return response.data.articles;
+};

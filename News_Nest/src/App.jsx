@@ -3,46 +3,91 @@ import Navbar from "./components/Navbar";
 import SearchBar from "./components/SearchBar";
 import CategoryButtons from "./components/CategoryButtons";
 import NewsCard from "./components/NewsCard";
-import { getTopHeadlines, getNewsByCategory,} from "./services/newsApi";
+
+import {
+  getTopHeadlines,
+  getNewsByCategory,
+  searchNews,
+} from "./services/newsApi";
 
 function App() {
+  // State to store news articles
   const [news, setNews] = useState([]);
+
+  // Loading state
   const [loading, setLoading] = useState(true);
 
+  // Search input state
+  const [searchText, setSearchText] = useState("");
+
+  // Fetch top headlines when app loads
   useEffect(() => {
-    async function fetchNews() {
-      try {
-        const articles = await getTopHeadlines();
-        setNews(articles);
-      } catch (error) {
-        console.error(error);
-      } finally {
-        setLoading(false);
-      }
-    }
-
-    fetchNews();
+    fetchTopNews();
   }, []);
-  const handleCategory = async (category) => {
-  setLoading(true);
 
-  try {
-    const articles = await getNewsByCategory(category);
-    setNews(articles);
-  } catch (error) {
-    console.error(error);
-  } finally {
-    setLoading(false);
-  }
-};
+  // Function to fetch top headlines
+  const fetchTopNews = async () => {
+    setLoading(true);
+
+    try {
+      const articles = await getTopHeadlines();
+      setNews(articles);
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Function to fetch news by category
+  const handleCategory = async (category) => {
+    setLoading(true);
+
+    try {
+      let articles;
+
+      if (category === "") {
+        articles = await getTopHeadlines();
+      } else {
+        articles = await getNewsByCategory(category);
+      }
+
+      setNews(articles);
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Function to search news
+  const handleSearch = async () => {
+    if (!searchText.trim()) return;
+
+    setLoading(true);
+
+    try {
+      const articles = await searchNews(searchText);
+      setNews(articles);
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <>
-      <Navbar />
+      <Navbar onCategorySelect={handleCategory} />
 
       <main className="max-w-7xl mx-auto px-6 py-8">
-        <SearchBar />
-       <CategoryButtons onCategorySelect={handleCategory} />
+        <SearchBar
+          searchText={searchText}
+          setSearchText={setSearchText}
+          onSearch={handleSearch}
+        />
+
+        <CategoryButtons onCategorySelect={handleCategory} />
 
         {loading ? (
           <h1 className="text-center text-2xl font-semibold mt-10">

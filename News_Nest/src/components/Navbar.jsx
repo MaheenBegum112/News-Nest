@@ -1,33 +1,41 @@
-import { Link } from "react-router-dom";
-
-function Navbar() {
+function Navbar({ onCategorySelect }) {
   return (
     <nav className="w-full border-b border-gray-200 px-8 py-4 flex justify-between items-center">
-      {/* Logo */}
-      <Link
-        to="/"
-        className="text-3xl font-bold text-blue-600"
+      <h1
+        className="text-3xl font-bold text-blue-600 cursor-pointer"
+        onClick={() => onCategorySelect("")}
       >
         NewsNest
-      </Link>
+      </h1>
 
-      {/* Navigation Links */}
       <div className="flex items-center gap-8">
-        <Link to="/" className="hover:text-blue-600">
+        <button
+          onClick={() => onCategorySelect("")}
+          className="hover:text-blue-600"
+        >
           Home
-        </Link>
+        </button>
 
-        <Link to="/technology" className="hover:text-blue-600">
+        <button
+          onClick={() => onCategorySelect("technology")}
+          className="hover:text-blue-600"
+        >
           Technology
-        </Link>
+        </button>
 
-        <Link to="/sports" className="hover:text-blue-600">
+        <button
+          onClick={() => onCategorySelect("sports")}
+          className="hover:text-blue-600"
+        >
           Sports
-        </Link>
+        </button>
 
-        <Link to="/business" className="hover:text-blue-600">
+        <button
+          onClick={() => onCategorySelect("business")}
+          className="hover:text-blue-600"
+        >
           Business
-        </Link>
+        </button>
       </div>
     </nav>
   );

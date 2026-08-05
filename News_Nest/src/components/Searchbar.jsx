@@ -1,17 +1,29 @@
-function SearchBar() {
+function SearchBar({
+  searchText,
+  setSearchText,
+  onSearch,
+}) {
   return (
-    <div className="flex justify-center mt-10">
-      <div className="flex w-full max-w-2xl gap-3">
-        <input
-          type="text"
-          placeholder="Search latest news..."
-          className="flex-1 border border-gray-300 rounded-lg px-4 py-3 outline-none focus:ring-2 focus:ring-blue-500"
-        />
+    <div className="flex justify-center gap-3 mt-10">
+      <input
+        type="text"
+        placeholder="Search latest news..."
+        value={searchText}
+        onChange={(e) => setSearchText(e.target.value)}
+        onKeyDown={(e) => {
+          if (e.key === "Enter") {
+            onSearch();
+          }
+        }}
+        className="w-full max-w-xl border rounded-lg px-4 py-3 outline-none"
+      />
 
-        <button className="bg-blue-600 text-white px-6 rounded-lg hover:bg-blue-700 transition">
-          Search
-        </button>
-      </div>
+      <button
+        onClick={onSearch}
+        className="bg-blue-600 text-white px-8 rounded-lg hover:bg-blue-700 transition"
+      >
+        Search
+      </button>
     </div>
   );
 }
