@@ -1,8 +1,13 @@
 import axios from "axios";
 
+const API_KEY = import.meta.env.VITE_GNEWS_API_KEY;
+const BASE_URL = "https://gnews.io/api/v4";
+
 // Top headlines
 export const getTopHeadlines = async () => {
-  const response = await axios.get("/api/news?type=top");
+  const response = await axios.get(
+    `${BASE_URL}/top-headlines?country=in&lang=en&max=10&apikey=${API_KEY}`
+  );
 
   return response.data.articles;
 };
@@ -10,16 +15,7 @@ export const getTopHeadlines = async () => {
 // News by category
 export const getNewsByCategory = async (category) => {
   const response = await axios.get(
-    `/api/news?type=category&category=${category}`
-  );
-
-  return response.data.articles;
-};
-
-// Search news
-export const searchNews = async (query) => {
-  const response = await axios.get(
-    `/api/news?type=search&q=${encodeURIComponent(query)}`
+    `${BASE_URL}/top-headlines?topic=${category}&lang=en&max=10&apikey=${API_KEY}`
   );
 
   return response.data.articles;

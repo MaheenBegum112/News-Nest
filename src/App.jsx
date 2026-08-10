@@ -3,91 +3,34 @@ import Navbar from "./components/Navbar";
 import SearchBar from "./components/SearchBar";
 import CategoryButtons from "./components/CategoryButtons";
 import NewsCard from "./components/NewsCard";
-
-import {
-  getTopHeadlines,
-  getNewsByCategory,
-  searchNews,
-} from "./services/newsApi";
+import { getTopHeadlines } from "./services/newsApi";
 
 function App() {
-  // State to store news articles
   const [news, setNews] = useState([]);
-
-  // Loading state
   const [loading, setLoading] = useState(true);
 
-  // Search input state
-  const [searchText, setSearchText] = useState("");
-
-  // Fetch top headlines when app loads
   useEffect(() => {
-    fetchTopNews();
-  }, []);
-
-  // Function to fetch top headlines
-  const fetchTopNews = async () => {
-    setLoading(true);
-
-    try {
-      const articles = await getTopHeadlines();
-      setNews(articles);
-    } catch (error) {
-      console.error(error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  // Function to fetch news by category
-  const handleCategory = async (category) => {
-    setLoading(true);
-
-    try {
-      let articles;
-
-      if (category === "") {
-        articles = await getTopHeadlines();
-      } else {
-        articles = await getNewsByCategory(category);
+    async function fetchNews() {
+      try {
+        const articles = await getTopHeadlines();
+        setNews(articles);
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setLoading(false);
       }
-
-      setNews(articles);
-    } catch (error) {
-      console.error(error);
-    } finally {
-      setLoading(false);
     }
-  };
 
-  // Function to search news
-  const handleSearch = async () => {
-    if (!searchText.trim()) return;
-
-    setLoading(true);
-
-    try {
-      const articles = await searchNews(searchText);
-      setNews(articles);
-    } catch (error) {
-      console.error(error);
-    } finally {
-      setLoading(false);
-    }
-  };
+    fetchNews();
+  }, []);
 
   return (
     <>
-      <Navbar onCategorySelect={handleCategory} />
+      <Navbar />
 
       <main className="max-w-7xl mx-auto px-6 py-8">
-        <SearchBar
-          searchText={searchText}
-          setSearchText={setSearchText}
-          onSearch={handleSearch}
-        />
-
-        <CategoryButtons onCategorySelect={handleCategory} />
+        <SearchBar />
+        <CategoryButtons />
 
         {loading ? (
           <h1 className="text-center text-2xl font-semibold mt-10">
