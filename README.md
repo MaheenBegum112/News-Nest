@@ -1,16 +1,37 @@
-# React + Vite
+# 📰 NewsNest
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+NewsNest is a modern news web application built with **React.js** that allows users to browse the latest news, explore news by category, and search for specific news articles.
+## 🛠️ Technologies Used
 
-Currently, two official plugins are available:
+- **React.js**
+- **JavaScript**
+- **Tailwind CSS**
+- **Axios**
+- **GNews API**
+- **Vite**
+- **Git & GitHub**
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
 
-## React Compiler
+## 📌 Features
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- 📰 View latest news headlines
+- 🔍 Search for news articles
+- 🗂️ Browse news by category
+- 📱 Responsive design
+- ⚡ Fast and dynamic React UI
+- 🌐 News fetched using the GNews API
+- 🔐 API key handled using environment variables
+- 🚀 Deployable on Vercel / Netlify
+⚙️ Installation
+1. Clone the repository
+   git clone https://github.com/MaheenBegum112/News-Nest.git
+2. Navigate to the project
+   cd News_Nest
+3.Install dependencies
+  npm install
+4.Add your API key
+  VITE_GNEWS_API_KEY=your_api_key_here
+5.Start the development server
+  npm run dev
 
-## Expanding the ESLint configuration
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
