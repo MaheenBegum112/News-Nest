@@ -24,18 +24,23 @@ NewsNest is a modern news web application built with **React.js** that allows us
 - 🚀 Deployable on Vercel / Netlify
 ⚙️ Installation
 1. Clone the repository
+2. 
    git clone https://github.com/MaheenBegum112/News-Nest.git
    
 3. Navigate to the project
+4. 
    cd News_Nest
    
 3.Install dependencies
+
   npm install
   
 4.Add your API key
+
   VITE_GNEWS_API_KEY=your_api_key_here
   
 5.Start the development server
+
   npm run dev
 
 
