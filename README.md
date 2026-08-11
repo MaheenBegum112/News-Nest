@@ -25,15 +25,15 @@ NewsNest is a modern news web application built with **React.js** that allows us
 ⚙️ Installation
 1. Clone the repository
  
-   git clone https://github.com/MaheenBegum112/News-Nest.git
+       git clone https://github.com/MaheenBegum112/News-Nest.git
    
 2. Navigate to the project
    
-   cd News_Nest
+       cd News_Nest
    
 3.Install dependencies
 
-   npm install
+     npm install
   
 4.Add your API key
 
