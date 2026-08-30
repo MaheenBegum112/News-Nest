@@ -13,7 +13,7 @@ app.add_middleware(
     CORSMiddleware,
     allow_origins=[
         "http://localhost:5173",
-        "https://news-nest-kyii1mlec-maheenbegum112s-projects.vercel.app"
+        "https://news-nest-blush.vercel.app"
     ],
     allow_credentials=True,
     allow_methods=["*"],
@@ -71,3 +71,4 @@ def get_news(category: str = Query(default="")):
             "status": "error",
             "message": str(e)
         }
+
