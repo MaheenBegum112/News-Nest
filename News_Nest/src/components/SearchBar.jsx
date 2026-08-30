@@ -20,7 +20,7 @@ function SearchBar({
 
       <button
         onClick={onSearch}
-        className="bg-blue-900 text-white px-8 rounded-lg hover:bg-blue-700 transition"
+        className="bg-blue-700 text-white px-8 rounded-lg hover:bg-blue-700 transition"
       >
         Search
       </button>

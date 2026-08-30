@@ -1,32 +1,13 @@
 import axios from "axios";
 
-const API_KEY = import.meta.env.VITE_GNEWS_API_KEY;
-const BASE_URL = "https://gnews.io/api/v4";
+const API_URL = "http://localhost:8000";
 
-// Top headlines
-export const getTopHeadlines = async () => {
-  const response = await axios.get(`${BASE_URL}/top-headlines`, {
+export const getTopHeadlines = async (category = "") => {
+  const response = await axios.get(`${API_URL}/news`, {
     params: {
-      country: "in",
-      lang: "en",
-      max: 10,
-      apikey: API_KEY,
+      category: category,
     },
   });
 
-  return response.data.articles;
-};
-
-// News by category
-export const getNewsByCategory = async (category) => {
-  const response = await axios.get(`${BASE_URL}/top-headlines`, {
-    params: {
-      topic: category,
-      lang: "en",
-      max: 10,
-      apikey: API_KEY,
-    },
-  });
-
-  return response.data.articles;
+  return response.data.articles || [];
 };
