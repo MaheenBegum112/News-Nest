@@ -1,4 +1,4 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Query
 from fastapi.middleware.cors import CORSMiddleware
 import requests
 import os
@@ -8,6 +8,7 @@ load_dotenv()
 
 app = FastAPI()
 
+# CORS
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[
@@ -21,36 +22,52 @@ app.add_middleware(
 
 GNEWS_API_KEY = os.getenv("GNEWS_API_KEY")
 
+GNEWS_URL = "https://gnews.io/api/v4/top-headlines"
+
 
 @app.get("/")
 def home():
-    return {"message": "NewsNest Backend is running!"}
+    return {"message": "NewsNest Backend is running"}
 
 
 @app.get("/news")
-def get_news(category: str = ""):
+def get_news(category: str = Query(default="")):
 
+    params = {
+        "apikey": GNEWS_API_KEY,
+        "lang": "en",
+        "country": "in",
+        "max": 10
+    }
+
+    # Add category only if selected
     if category:
-        url = "https://gnews.io/api/v4/top-headlines"
+        params["category"] = category
 
-        params = {
-            "category": category,
-            "lang": "en",
-            "country": "in",
-            "max": 10,
-            "apikey": GNEWS_API_KEY
+    try:
+        response = requests.get(
+            GNEWS_URL,
+            params=params,
+            timeout=10
+        )
+
+        print("GNews URL:", response.url)
+        print("GNews Status:", response.status_code)
+
+        if response.status_code != 200:
+            return {
+                "status": "error",
+                "message": "GNews API request failed",
+                "gnews_status": response.status_code,
+                "details": response.text
+            }
+
+        data = response.json()
+
+        return data
+
+    except requests.exceptions.RequestException as e:
+        return {
+            "status": "error",
+            "message": str(e)
         }
-
-    else:
-        url = "https://gnews.io/api/v4/top-headlines"
-
-        params = {
-            "lang": "en",
-            "country": "in",
-            "max": 10,
-            "apikey": GNEWS_API_KEY
-        }
-
-    response = requests.get(url, params=params)
-
-    return response.json()
